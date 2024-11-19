@@ -1,7 +1,10 @@
 package grammar
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func PrintGrammar() {
 	fmt.Println("")
+
 }
