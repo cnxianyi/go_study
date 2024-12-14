@@ -40,6 +40,12 @@ func setupRouter() *gin.Engine {
 
 	r := gin.Default()
 
+	// 设置模式 debug | release
+	gin.SetMode(os.Getenv("GIN_MODE"))
+
+	// 设置信任代理
+	r.SetTrustedProxies([]string{"127.0.0.1"})
+
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "hello world!")
 	})
