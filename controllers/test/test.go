@@ -1,4 +1,4 @@
-package testRouter
+package test
 
 import (
 	"net/http"
