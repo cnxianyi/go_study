@@ -2,11 +2,10 @@ package main
 
 import (
 	"fmt"
+	"go_study/router"
 	"log"
-	"net/http"
 	"os"
 
-	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
@@ -35,24 +34,6 @@ func setupEnv() {
 	}
 }
 
-// 配置路由
-func setupRouter() *gin.Engine {
-
-	r := gin.Default()
-
-	// 设置模式 debug | release
-	gin.SetMode(os.Getenv("GIN_MODE"))
-
-	// 设置信任代理
-	r.SetTrustedProxies([]string{"127.0.0.1"})
-
-	r.GET("/", func(c *gin.Context) {
-		c.String(http.StatusOK, "hello world!")
-	})
-
-	return r
-}
-
 func main() {
 	setupEnv()
 
@@ -61,6 +42,6 @@ func main() {
 		port = "8080" // 默认值8080
 	}
 
-	r := setupRouter()
+	r := router.SetupRouter()
 	r.Run(":" + port)
 }
