@@ -36,7 +36,6 @@ func setupEnv() {
 
 func main() {
 	setupEnv()
-
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080" // 默认值8080

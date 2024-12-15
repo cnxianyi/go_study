@@ -7,5 +7,9 @@ import (
 )
 
 func GrammarGo(c *gin.Context) {
-	c.String(http.StatusOK, "grammar for go")
+	stateGrammar()
+	c.JSON(http.StatusOK, gin.H{
+		"code":    200,
+		"message": "success",
+	})
 }
