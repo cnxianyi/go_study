@@ -54,17 +54,16 @@ s := "s1"
 		// 交换 p q 的地址
 		p := &x
 		q := &y
-		temp := &x
-		p = q
-		q = temp
+		p, q = q, p
+
 		log.Println(*p) // 2
 		log.Println(*q) // 1
 		log.Println(x)  // 1
 		log.Println(y)  // 2
 
-		// 通过 指针改变对应变量的值
-		*temp = 3
-		log.Println(x) // 3
+		// // 通过 指针改变对应变量的值
+		*p = 3
+		log.Println(*p) // 3
 
 	TODO 指针之间的判断
 		var x, y int
@@ -104,6 +103,25 @@ s := "s1"
 		println(s) // 0xc0000bf788
 		*s = "str"
 		println(*s) // str
+
+赋值
+	TODO 元组赋值
+	x, y := 1, 2
+
+	TODO 可赋值性
+	诸如复合类型 map、chan、等 都会隐式调用赋值行为
+	strs := []string{"str1", "str2", "str3"}
+	println(strs[2]) // str3
+
+类型
+	type 类型名字 底层类型
+
+包
+	一般 包名和 包所在的路径的最后一段路径相同
+	大写导出 小写仅包内能够访问
+
+	包的初始化 按照
+
 */
 
 func stateGrammar() {
