@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"go_study/router"
+	dbMysql "go_study/sql"
 	"log"
 	"os"
 
@@ -36,6 +37,7 @@ func setupEnv() {
 
 func main() {
 	setupEnv()
+	dbMysql.ConnectionMysql()
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080" // 默认值8080
