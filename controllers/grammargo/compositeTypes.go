@@ -1,8 +1,12 @@
 package grammargo
 
-/* 复合数据类型
+import "encoding/json"
+
+/*
+	复合数据类型
 
 TODO 数组
+
 	数组的长度是 固定 的 , 在编译时就已经被固定
 	支持 下标访问 支持 len()
 	默认情况下 数组的元素会被初始化为 零值
@@ -18,6 +22,7 @@ TODO 数组
 		println(len(arr), arr[50]) // 100 50
 
 TODO Slice 切片
+
 	Slice是 对一个底层数组的 引用或视图
 	Slice 由三个部分构成 指针、长度、容量
 		指针: slice第一个元素对应的底层数组的地址
@@ -62,6 +67,7 @@ TODO Slice 切片
 		println(len(s), s[3]) // 4 1
 
 TODO Map 哈希表
+
 	无序的key/value 集合
 	唯一key
 	每个map都是 对一个哈希表的引用
@@ -95,12 +101,104 @@ TODO Map 哈希表
 	map 只能跟 nil ==
 
 TODO 结构体
+
+ 1. 支持 . 访问
+
+ 2. 支持指针
+
+ 3. 支持 成员大写 自动导出
+    type User struct {
+    Name string
+    Age  int
+    }
+    var ilya User = User{
+    Name: "Ilya",
+    Age:  18,
+    }
+    fmt.Println(ilya)                                         // {Ilya 18}
+    println(ilya.Name + " is " + fmt.Sprintf("%d", ilya.Age)) // Ilya is 18
+    ilya.Age = 19
+    fmt.Println(ilya) // {Ilya 19}
+
+    支持 结构体字面值
+    ilya := User{"Ilya", 18}
+    或者
+    ilya := User{Name: "Ilya"} // {Ilya 0}
+
+    支持 函数返回值
+    type User struct {
+    Name string
+    Age  int
+    }
+
+    func compositeType() User {
+    ilya := User{Name: "Ilya"}
+    return ilya // {Ilya 0}
+    }
+
+    将结构体作为参数传递到函数中时,Go中默认是值拷贝
+    因此传递时应该使用指针
+
+    type User struct {
+    Name string
+    Age  int
+    }
+
+    func test() *User {
+    return &User{Name: "Ilya"}
+    }
+
+    func compositeType() {
+    u1 := test()
+    u1.Age = 18
+    println(u1.Name, u1.Age) // Ilya 18
+    }
+
+    当结构体中 所有成员 都支持 比较,那么结构体之间也可以比较
+	type User struct {
+		Name string
+		Age  int
+	}
+	u1 := User{Name: "U1", Age: 1}
+	u2 := User{Name: "U2", Age: 1}
+	println(u1 == u2)         // false
+	println(u1.Age == u2.Age) // true
+
+TODO JSON
+	json.Marshakl() 用于将结构体转换为json
+	json.Unmarshal() 用于将json转换为结构体
+
+	type User struct {
+		Name string
+	}
+	j1 := `{"name": "ilya"}`
+	var u1 User
+	err := json.Unmarshal([]byte(j1), &u1)
+	if err != nil {
+		println("json解析失败")
+	}
+	println(u1.Name) // ilya
+	j2, _ := json.MarshalIndent(u1, "", "  ")
+	println(string(j2))
+	//{
+	//   "Name": "ilya"
+	// }
 */
 
 func compositeType() {
-	m1 := map[string]int{"a": 0}
-	if m, ok := m1["a"]; ok { // ok 的值是 map中是否真的有这个值
-		println(m) // 0 只有真的存在才会执行,而不是返回零值
+	type User struct {
+		Name string
 	}
-
+	j1 := `{"name": "ilya"}`
+	var u1 User
+	err := json.Unmarshal([]byte(j1), &u1)
+	if err != nil {
+		println("json解析失败")
+	}
+	println(u1.Name) // ilya
+	j2, _ := json.MarshalIndent(u1, "", "  ")
+	println(string(j2))
+	//{
+	//   "Name": "ilya"
+	// }
 }
