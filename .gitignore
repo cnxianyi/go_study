@@ -24,3 +24,5 @@ go.work.sum
 /tmp
 
 app
+
+.env.production
