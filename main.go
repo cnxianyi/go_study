@@ -15,7 +15,7 @@ func setupEnv() {
 	// godotenv
 	env := os.Getenv("GO_ENV")
 	if env == "" {
-		env = "dev"
+		env = "development"
 		log.Print("当前环境", env)
 	} else {
 		log.Print("当前环境", env)
@@ -37,7 +37,12 @@ func setupEnv() {
 
 func main() {
 	setupEnv()
-	dbMysql.ConnectionMysql()
+
+	_, err := dbMysql.ConnectionMysql()
+	if err != nil {
+		fmt.Println(err)
+	}
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080" // 默认值8080
