@@ -2,7 +2,8 @@ package router
 
 import (
 	"go_study/controllers/grammargo"
-	"go_study/controllers/test"
+	testRouter "go_study/controllers/test"
+	userRouter "go_study/controllers/user"
 	"net/http"
 	"os"
 
@@ -29,14 +30,20 @@ func SetupRouter() *gin.Engine {
 	})
 
 	// 路由分组
-	testRouter := r.Group("/test")
+	_testRouter := r.Group("/test")
 	{
-		testRouter.GET("/", test.TestRouter)
+		_testRouter.GET("/", testRouter.TestRouter)
 	}
 
 	grammargoRouter := r.Group("grammargo")
 	{
 		grammargoRouter.GET("/", grammargo.GrammarGo)
+	}
+
+	_userRouter := r.Group("/user")
+	{
+		_userRouter.GET("/", userRouter.UserRouter)
+		_userRouter.POST("/add", userRouter.CreateUser)
 	}
 
 	return r
