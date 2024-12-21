@@ -1,12 +1,18 @@
-package dbMysql
+package mysql
 
 import (
 	"database/sql"
 	"fmt"
 	"os"
 	"strings"
+	"sync"
 
 	"github.com/go-sql-driver/mysql"
+)
+
+var (
+	db   *sql.DB   // 全局数据库连接池变量，初始值为 nil
+	once sync.Once // 全局 sync.Once，确保数据库连接只会初始化一次
 )
 
 func ConnectionMysql() (*sql.DB, error) {
@@ -70,4 +76,18 @@ func ConnectionMysql() (*sql.DB, error) {
 	fmt.Println("MySQL 连接成功")
 
 	return db, nil
+}
+
+// InitDB 初始化数据库连接
+func InitDB() error {
+	var err error
+	once.Do(func() { // 保证 ConnectionMysql 只会被调用一次
+		db, err = ConnectionMysql()
+	})
+	return err
+}
+
+// GetDB 获取数据库连接实例
+func GetDB() *sql.DB {
+	return db // 返回全局数据库连接池实例
 }
