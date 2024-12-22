@@ -9,7 +9,6 @@ import (
 func GrammarGo(c *gin.Context) {
 	stateGrammar()
 	basicTypes()
-	compositeType()
 
 	c.JSON(http.StatusOK, gin.H{
 		"code":    200,

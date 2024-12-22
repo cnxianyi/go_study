@@ -35,15 +35,23 @@ func SetupRouter() *gin.Engine {
 		_testRouter.GET("/", testRouter.TestRouter)
 	}
 
-	grammargoRouter := r.Group("grammargo")
-	{
-		grammargoRouter.GET("/", grammargo.GrammarGo)
-	}
-
 	_userRouter := r.Group("/user")
 	{
 		_userRouter.GET("/", userRouter.UserRouter)
 		_userRouter.POST("/add", userRouter.CreateUser)
+	}
+
+	grammargoRouter := r.Group("grammargo")
+	{
+		grammargoRouter.GET("/", grammargo.GrammarGo)
+
+		grammargoRouter.GET("/ct/CompositeTypeByArray", grammargo.CompositeTypeByArray)
+		grammargoRouter.GET("/ct/CompositeTypeBySlice", grammargo.CompositeTypeBySlice)
+		grammargoRouter.GET("/ct/CompositeTypeByMap", grammargo.CompositeTypeByMap)
+		grammargoRouter.GET("/ct/compositeTypeByStruct", grammargo.CompositeTypeByStruct)
+		grammargoRouter.GET("/ct/compositeTypeByJson", grammargo.CompositeTypeByJson)
+		grammargoRouter.GET("/ct/compositeTypeByTextTemplate", grammargo.CompositeTypeByTextTemplate)
+
 	}
 
 	return r
