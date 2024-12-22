@@ -45,6 +45,8 @@ func SetupRouter() *gin.Engine {
 	{
 		grammargoRouter.GET("/", grammargo.GrammarGo)
 
+		grammargoRouter.GET("/bt/basicTypes", grammargo.BasicTypes)
+
 		grammargoRouter.GET("/ct/CompositeTypeByArray", grammargo.CompositeTypeByArray)
 		grammargoRouter.GET("/ct/CompositeTypeBySlice", grammargo.CompositeTypeBySlice)
 		grammargoRouter.GET("/ct/CompositeTypeByMap", grammargo.CompositeTypeByMap)
