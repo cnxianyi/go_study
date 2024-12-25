@@ -54,6 +54,8 @@ func SetupRouter() *gin.Engine {
 		grammargoRouter.GET("/ct/compositeTypeByJson", grammargo.CompositeTypeByJson)
 		grammargoRouter.GET("/ct/compositeTypeByTextTemplate", grammargo.CompositeTypeByTextTemplate)
 
+		grammargoRouter.GET("/fc/FuncGrammar", grammargo.FuncGrammar)
+
 	}
 
 	return r
