@@ -59,6 +59,9 @@ func SetupRouter() *gin.Engine {
 		// 方法
 		grammargoRouter.GET("/me/MethodTest", grammargo.MethodTest)
 		grammargoRouter.GET("/me/ExpandStruct", grammargo.ExpandStruct)
+
+		// 接口
+		grammargoRouter.GET("/in/interfaceTest", grammargo.InterfaceTest)
 	}
 
 	return r
