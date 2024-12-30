@@ -1,6 +1,7 @@
 package router
 
 import (
+	"go_study/controllers/grammargin"
 	"go_study/controllers/grammargo"
 	testRouter "go_study/controllers/test"
 	userRouter "go_study/controllers/user"
@@ -23,6 +24,11 @@ func SetupRouter() *gin.Engine {
 
 	// 设置信任代理
 	r.SetTrustedProxies([]string{"127.0.0.1"})
+
+	// 加载HTML模板
+	// r.LoadHTMLFiles("templates/gin/file.html")
+	// or
+	r.LoadHTMLGlob("templates/gin/file.html")
 
 	// 默认路由
 	r.GET("/", func(c *gin.Context) {
@@ -62,6 +68,20 @@ func SetupRouter() *gin.Engine {
 
 		// 接口
 		grammargoRouter.GET("/in/interfaceTest", grammargo.InterfaceTest)
+
+		// 协程
+		grammargoRouter.GET("/gr/interfaceTest", grammargo.GoroutinesTest)
+
+		// gin 渲染
+		grammargoRouter.GET("/gin/AsciiJSON", grammargin.AsciiJSON)
+		grammargoRouter.GET("/gin/html", grammargin.Html)      // html模版
+		grammargoRouter.POST("/gin/form1", grammargin.Form1)   // 表单
+		grammargoRouter.POST("/gin/form2", grammargin.Form2)   // 接收表单数据
+		grammargoRouter.POST("/gin/query1", grammargin.Query1) // 接收 Query
+
+		grammargoRouter.GET("/gin/xml", grammargin.Xml)   // XML格式
+		grammargoRouter.GET("/gin/json", grammargin.Json) // XML格式
+		grammargoRouter.GET("/gin/yaml", grammargin.Yaml) // yaml格式
 	}
 
 	return r
