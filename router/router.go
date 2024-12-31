@@ -72,6 +72,9 @@ func SetupRouter() *gin.Engine {
 		// 协程
 		grammargoRouter.GET("/gr/Goroutines", grammargo.GoroutinesTest)
 
+		// 反射
+		grammargoRouter.GET("/rf/reflect", grammargo.ReflectTest)
+
 		// gin 渲染
 		grammargoRouter.GET("/gin/AsciiJSON", grammargin.AsciiJSON)
 		grammargoRouter.GET("/gin/html", grammargin.Html)      // html模版
