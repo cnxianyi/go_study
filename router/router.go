@@ -3,6 +3,7 @@ package router
 import (
 	"go_study/controllers/grammargin"
 	"go_study/controllers/grammargo"
+	"go_study/controllers/grammarmysql"
 	testRouter "go_study/controllers/test"
 	userRouter "go_study/controllers/user"
 	"net/http"
@@ -47,6 +48,7 @@ func SetupRouter() *gin.Engine {
 		_userRouter.POST("/add", userRouter.CreateUser)
 	}
 
+	// Go语法
 	grammargoRouter := r.Group("grammargo")
 	{
 		grammargoRouter.GET("/", grammargo.GrammarGo)
@@ -85,6 +87,15 @@ func SetupRouter() *gin.Engine {
 		grammargoRouter.GET("/gin/xml", grammargin.Xml)   // XML格式
 		grammargoRouter.GET("/gin/json", grammargin.Json) // XML格式
 		grammargoRouter.GET("/gin/yaml", grammargin.Yaml) // yaml格式
+	}
+
+	// Mysql语法
+	grammarmysqlRouter := r.Group("grammarmysql")
+	{
+		grammarmysqlRouter.GET("/add/add", grammarmysql.Add)
+
+		// 新增表
+		grammarmysqlRouter.POST("/add/addTable", grammarmysql.AddTable)
 	}
 
 	return r
