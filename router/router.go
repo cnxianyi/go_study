@@ -70,7 +70,7 @@ func SetupRouter() *gin.Engine {
 		grammargoRouter.GET("/in/interfaceTest", grammargo.InterfaceTest)
 
 		// 协程
-		grammargoRouter.GET("/gr/interfaceTest", grammargo.GoroutinesTest)
+		grammargoRouter.GET("/gr/Goroutines", grammargo.GoroutinesTest)
 
 		// gin 渲染
 		grammargoRouter.GET("/gin/AsciiJSON", grammargin.AsciiJSON)
