@@ -101,6 +101,9 @@ func SetupRouter() *gin.Engine {
 
 		// 更新数据
 		grammarmysqlRouter.POST("/update/updateToTable", grammarmysql.UpdateToTable)
+
+		// 获取数据
+		grammarmysqlRouter.POST("/read/ReadAll", grammarmysql.ReadAll)
 	}
 
 	return r
