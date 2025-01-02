@@ -3,3 +3,5 @@
 开发环境 `GO_ENV=development go run main.go`
 
 生产环境 `GO_ENV=production go run main.go`
+
+`go get github.com/redis/go-redis/v9`

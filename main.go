@@ -1,48 +1,17 @@
 package main
 
 import (
-	"fmt"
+	"go_study/config"
 	"go_study/models"
 	"go_study/router"
-	"log"
 	"os"
-
-	"github.com/joho/godotenv"
 )
 
-// 配置env
-func setupEnv() {
-	// godotenv
-	env := os.Getenv("GO_ENV")
-	if env == "" {
-		env = "development"
-		log.Print("当前环境", env)
-	} else {
-		log.Print("当前环境", env)
-	}
-
-	// 加载默认文件 .env
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Print(".env 文件未找到")
-	}
-
-	// 加载环境文件 .env.
-	envFile := fmt.Sprintf(".env.%s", env)
-	err = godotenv.Overload(envFile)
-	if err != nil {
-		log.Printf("%s 文件未找到", envFile)
-	}
-}
-
 func main() {
-	setupEnv()
-	// _, err := dbMysql.ConnectionMysql()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
+	config.SetupEnv()
 
 	models.InitMysql()
+	models.InitRedis()
 
 	port := os.Getenv("PORT")
 	if port == "" {
