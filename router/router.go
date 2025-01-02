@@ -104,6 +104,9 @@ func SetupRouter() *gin.Engine {
 
 		// 获取数据
 		grammarmysqlRouter.POST("/read/ReadAll", grammarmysql.ReadAll)
+
+		// 删除数据
+		grammarmysqlRouter.POST("/delete/DeleteToTable", grammarmysql.DeleteToTable)
 	}
 
 	return r
