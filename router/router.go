@@ -98,6 +98,9 @@ func SetupRouter() *gin.Engine {
 		grammarmysqlRouter.POST("/create/createTable", grammarmysql.CreateTable)
 		// 插入数据
 		grammarmysqlRouter.POST("/create/InsertToTable", grammarmysql.InsertToTable)
+
+		// 更新数据
+		grammarmysqlRouter.POST("/update/updateToTable", grammarmysql.UpdateToTable)
 	}
 
 	return r
