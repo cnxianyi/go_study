@@ -4,6 +4,7 @@ import (
 	"go_study/controllers/grammargin"
 	"go_study/controllers/grammargo"
 	"go_study/controllers/grammarmysql"
+	"go_study/controllers/grammarredis"
 	testRouter "go_study/controllers/test"
 	userRouter "go_study/controllers/user"
 	"net/http"
@@ -107,6 +108,11 @@ func SetupRouter() *gin.Engine {
 
 		// 删除数据
 		grammarmysqlRouter.POST("/delete/DeleteToTable", grammarmysql.DeleteToTable)
+	}
+
+	grammarredisRouter := r.Group("grammarredis")
+	{
+		grammarredisRouter.POST("/redis/redistest", grammarredis.RedisTest)
 	}
 
 	return r
