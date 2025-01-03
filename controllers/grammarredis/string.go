@@ -20,6 +20,20 @@ INCR key 自增值
 INCRBY key increment 指定步长
 DECR key 自减
 DECRBY key increment
+//
+
+APPEND 字符串追加. 返回字符串长度
+STRLEN 字符串长度
+
+// 位操作
+SETBIT key offset value	设置 key 的指定偏移位为 0 或 1	SETBIT bitmap 7 1
+GETBIT key offset	获取 key 的指定偏移位的值	GETBIT bitmap 7
+BITCOUNT key	统计 key 中值为 1 的位数量	BITCOUNT bitmap
+BITOP operation destkey key [key ...]
+
+// 字符串操作
+GETRANGE key start end 获取指定部分
+SETRANGE key offset value 替换内容
 */
 func StringTest(c *gin.Context) {
 	var rdb = redis.GetDB()
@@ -52,7 +66,44 @@ func StringTest(c *gin.Context) {
 	}
 
 	//INCR 将 key的值 自增. 要求值为整数类型
-	// ...
+	rdb.Set(ctx, "incr1", "s", 0)
+	res4 := rdb.Incr(ctx, "incr1")
+	fmt.Println(res4) // incr incr1: ERR value is not an integer or out of range
+
+	// INCRBY 指定步长自增
+	rdb.Set(ctx, "incr1", "1", 0)
+	res5 := rdb.IncrBy(ctx, "incr1", 2)
+	fmt.Println(res5) // incrby incr1 2: 3
+
+	// DECR 自减
+	res6 := rdb.Decr(ctx, "incr1")
+	fmt.Println(res6) // decr incr1: 2
+
+	// DECRBY 指定步长自减
+	res7 := rdb.DecrBy(ctx, "incr1", 2)
+	fmt.Println(res7) // decrby incr1 2: 0
+
+	rdb.Set(ctx, "stringTestSet1", "hello", 0)
+
+	// APPEND 字符串拼接 返回字符串长度
+	res8 := rdb.Append(ctx, "stringTestSet1", " world")
+	fmt.Println(res8) // append stringTestSet1  world: 11
+
+	// STRLEN 字符串长度
+	res9 := rdb.StrLen(ctx, "stringTestSet1")
+	fmt.Println(res9) // strlen stringTestSet1: 11
+
+	// GETRANGE 获取部分字符串
+	res10 := rdb.GetRange(ctx, "stringTestSet1", 0, 4)
+	fmt.Println(res10) // getrange stringTestSet1 0 4: hello
+
+	// SETRANGE 替换部分字符串
+	res11 := rdb.SetRange(ctx, "stringTestSet1", 0, "HELLO")
+	fmt.Println(res11) // setrange stringTestSet1 4 HELLO: 11
+
+	res12, _ := rdb.Get(ctx, "stringTestSet1").Result()
+	fmt.Println(res12) // HELLO world
+
 	c.JSON(200, gin.H{
 		"message": "success",
 	})
