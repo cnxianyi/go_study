@@ -125,6 +125,9 @@ func SetupRouter() *gin.Engine {
 
 		// zset
 		grammarredisRouter.GET("/redis/zsettest", grammarredis.ZsetTest)
+
+		// hash
+		grammarredisRouter.GET("/redis/hashtest", grammarredis.HashTest)
 	}
 
 	return r
