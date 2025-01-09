@@ -115,7 +115,13 @@ func SetupRouter() *gin.Engine {
 		grammarredisRouter.POST("/redis/redistest", grammarredis.RedisTest)
 
 		// string
-		grammarredisRouter.GET("/redis-string/stringtest", grammarredis.StringTest)
+		grammarredisRouter.GET("/redis/stringtest", grammarredis.StringTest)
+
+		// list
+		grammarredisRouter.GET("/redis/listtest", grammarredis.ListTest)
+
+		// set
+		grammarredisRouter.GET("/redis/settest", grammarredis.SetTest)
 	}
 
 	return r
