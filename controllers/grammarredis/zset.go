@@ -84,6 +84,146 @@ func ZsetTest(c *gin.Context) {
 	})
 	fmt.Println(res5) // zadd myzset lt ch 2 value3: 1
 
+	// 不支持 WITHSCORES. 需要使用args
+	res6 := rdb.ZRange(ctx, "myzset", 0, 2)
+	fmt.Println(res6) // zrange myzset 0 2: [value1 value2 value3]
+
+	// 设置 WITHSCORES
+	res7 := rdb.ZRangeWithScores(ctx, "myzset", 0, 2)
+	fmt.Println(res7) // zrange myzset 0 2 withscores: [{1 value1} {1 value2} {2 value3}]
+
+	// 降序 查询 Range
+	res8 := rdb.ZRevRange(ctx, "myzset", 0, 2)
+	fmt.Println(res8) // zrevrange myzset 0 2: [value3 value2 value1]
+
+	res9 := rdb.ZRevRangeWithScores(ctx, "myzset", 0, 2)
+	fmt.Println(res9) // zrevrange myzset 0 2 withscores: [{2 value3} {1 value2} {1 value1}]
+
+	// ZRANGEBYSCORE 按照分值范围获取
+	res10 := rdb.ZRangeByScore(ctx, "myzset", &redislib.ZRangeBy{
+		Max: "1",
+		Min: "0",
+	})
+	fmt.Println(res10) // zrangebyscore myzset 0 1: [value1 value2]
+
+	// ZREVRANGEBYSCORE 分值范围降序
+	res11 := rdb.ZRevRangeByScore(ctx, "myzset", &redislib.ZRangeBy{
+		Max: "1",
+		Min: "0",
+	})
+	fmt.Println(res11) // zrevrangebyscore myzset 1 0: [value2 value1]
+
+	// 支持withscores
+	res12 := rdb.ZRangeByScoreWithScores(ctx, "myzset", &redislib.ZRangeBy{
+		Max: "1",
+		Min: "0",
+	})
+	fmt.Println(res12) // zrangebyscore myzset 0 1 withscores: [{1 value1} {1 value2}]
+
+	res13 := rdb.ZRevRangeByScoreWithScores(ctx, "myzset", &redislib.ZRangeBy{
+		Max: "1",
+		Min: "0",
+	})
+	fmt.Println(res13) // zrevrangebyscore myzset 1 0 withscores: [{1 value2} {1 value1}]
+
+	// ZRank 查询值排名
+	res14 := rdb.ZRank(ctx, "myzset", "value3")
+	fmt.Println(res14) // zrank myzset value2: 2
+
+	// ZSCORE 获取指定元素的值
+	res15 := rdb.ZScore(ctx, "myzset", "value3")
+	fmt.Println(res15) // zscore myzset value3: 2
+
+	// ZRem 删除元素 返回删除的数量
+	res16 := rdb.ZRem(ctx, "myzset", "value1", "value2")
+	fmt.Println(res16) // zrem myzset value1 value2: 2
+
+	// ZREMRANGEBYRANK 删除指定 排名 的元素
+	res17 := rdb.ZRemRangeByRank(ctx, "myzset", 0, 1)
+	fmt.Println(res17) // zremrangebyrank myzset 0 1: 1
+
+	// ZREMRANGEBYSCORE 删除指定 范围 的元素
+	res18 := rdb.ZRemRangeByScore(ctx, "myzset", "0", "1")
+	fmt.Println(res18) // zremrangebyscore myzset 0 1: 0
+
+	rdb.ZAdd(ctx, "myzset", redislib.Z{
+		Score:  1,
+		Member: "value1",
+	}, redislib.Z{
+		Score:  2,
+		Member: "value2",
+	})
+
+	// 获取长度
+	res19 := rdb.ZCard(ctx, "myzset")
+	fmt.Println(res19) // zcard myzset: 2
+
+	// 获取值指定范围 的元素的数量
+	res20 := rdb.ZCount(ctx, "myzset", "0", "1")
+	fmt.Println(res20) // zcount myzset 0 1: 1
+
+	rdb.ZAdd(ctx, "myzset1", redislib.Z{
+		Score:  1,
+		Member: "value1",
+	}, redislib.Z{
+		Score:  3,
+		Member: "value3",
+	})
+
+	// 1. 基本的 ZUNIONSTORE
+	res21, err := rdb.ZUnionStore(ctx, "destination", &redislib.ZStore{
+		Keys: []string{"myzset1", "myzset"},
+	}).Result()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Union members count: %d\n", res21)
+
+	// 2. 使用权重的 ZUNIONSTORE
+	res22, err := rdb.ZUnionStore(ctx, "destination_weighted", &redislib.ZStore{
+		Keys:    []string{"myzset1", "myzset"},
+		Weights: []float64{2, 1}, // myzset1 的分数权重为 2，myzset 的分数权重为 1
+	}).Result()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Weighted union members count: %d\n", res22)
+
+	// 3. 使用聚合函数的 ZUNIONSTORE
+	res23, err := rdb.ZUnionStore(ctx, "destination_min", &redislib.ZStore{
+		Keys:      []string{"myzset1", "myzset"},
+		Aggregate: "MIN", // 可以是 "SUM"(默认), "MIN", "MAX"
+	}).Result()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Min aggregate union members count: %d\n", res23)
+
+	// ZINTERSTORE 交集
+
+	// 1. 基本的 ZINTERSTORE
+	res24, err := rdb.ZInterStore(ctx, "inter_result", &redislib.ZStore{
+		Keys: []string{"myzset1", "myzset"},
+	}).Result()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("Intersection count: %d\n", res24)
+
+	// 2. 带权重的 ZINTERSTORE
+	res25, err := rdb.ZInterStore(ctx, "inter_weighted", &redislib.ZStore{
+		Keys:    []string{"myzset1", "myzset"},
+		Weights: []float64{2, 1}, // myzset1 的分数权重为 2，myzset2 的分数权重为 1
+	}).Result()
+	fmt.Printf("Intersection count: %d\n", res25)
+
+	// 3. 使用不同聚合函数
+	res26, err := rdb.ZInterStore(ctx, "inter_min", &redislib.ZStore{
+		Keys:      []string{"myzset1", "myzset"},
+		Aggregate: "MIN", // 可以是 "SUM"(默认), "MIN", "MAX"
+	}).Result()
+	fmt.Printf("Intersection count: %d\n", res26)
+
 	c.JSON(200, gin.H{
 		"message": "success",
 	})
