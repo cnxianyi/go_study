@@ -126,8 +126,10 @@ func SetupRouter() *gin.Engine {
 		// zset
 		grammarredisRouter.GET("/redis/zsettest", grammarredis.ZsetTest)
 
-		// hash
-		grammarredisRouter.GET("/redis/hashtest", grammarredis.HashTest)
+		// MQ
+		grammarredisRouter.GET("/redis/mq/ping", grammarredis.RedisMqPing)
+		grammarredisRouter.POST("/redis/mq/produce", grammarredis.RedisMqProducer)
+		grammarredisRouter.POST("/redis/mq/consumer", grammarredis.RedisMqConsumer)
 	}
 
 	return r
