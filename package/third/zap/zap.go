@@ -1,4 +1,4 @@
-package pzap
+package zap
 
 import (
 	"os"

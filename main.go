@@ -3,7 +3,7 @@ package main
 import (
 	"go_study/config"
 	"go_study/models"
-	"go_study/package/pzap"
+	"go_study/package/third/zap"
 	"go_study/router"
 	"os"
 )
@@ -21,8 +21,8 @@ func main() {
 
 	r := router.SetupRouter()
 
-	pzap.Init() // zap 日志
-	defer pzap.Logger.Sync()
+	zap.Init() // zap 日志
+	defer zap.Logger.Sync()
 
 	r.Run(":" + port)
 }

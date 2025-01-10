@@ -7,6 +7,7 @@ import (
 	"go_study/controllers/grammarredis"
 	testRouter "go_study/controllers/test"
 	userRouter "go_study/controllers/user"
+	fmtPack "go_study/package/standard/basic/fmt"
 	"net/http"
 	"os"
 
@@ -110,6 +111,7 @@ func SetupRouter() *gin.Engine {
 		grammarmysqlRouter.POST("/delete/DeleteToTable", grammarmysql.DeleteToTable)
 	}
 
+	// redis
 	grammarredisRouter := r.Group("grammarredis")
 	{
 		grammarredisRouter.POST("/redis/redistest", grammarredis.RedisTest)
@@ -130,6 +132,11 @@ func SetupRouter() *gin.Engine {
 		grammarredisRouter.GET("/redis/mq/ping", grammarredis.RedisMqPing)
 		grammarredisRouter.POST("/redis/mq/produce", grammarredis.RedisMqProducer)
 		grammarredisRouter.POST("/redis/mq/consumer", grammarredis.RedisMqConsumer)
+	}
+
+	packageRouter := r.Group("package")
+	{
+		packageRouter.GET("/package/fmt", fmtPack.FmtTest)
 	}
 
 	return r
