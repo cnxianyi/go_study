@@ -3,9 +3,7 @@ package main
 import (
 	"go_study/config"
 	"go_study/models"
-	strconv_test "go_study/package/standard/basic/strconv"
 	"go_study/package/third/zap"
-	"go_study/practice/multithread"
 	"go_study/router"
 	"os"
 )
@@ -26,11 +24,14 @@ func main() {
 	zap.Init() // zap 日志
 	defer zap.Logger.Sync()
 
-	strconv_test.StrconvTest()
+	// Strconv 测试
+	// strconv_test.StrconvTest()
 
-	println("_-----------------")
+	// 双线程输出 0~20
+	// multithread.PrintWithTwoThread()
 
-	multithread.PrintWithTwoThread()
+	// Viper测试
+	// viper.ViperTest()
 
 	r.Run(":" + port)
 
