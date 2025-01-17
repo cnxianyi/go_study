@@ -12,6 +12,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+// go get github.com/spf13/viper
+
 type Config struct {
 	Port int  `mapstructure:"port" json:"port" yaml:"port"`
 	Ipv6 bool `mapstructure:"ipv6" json:"ipv6" yaml:"ipv6"`
