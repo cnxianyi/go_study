@@ -2,6 +2,9 @@ package main
 
 import (
 	"go_study/config"
+	"go_study/database/mongodb"
+	"go_study/database/mysql"
+	"go_study/database/redis"
 	"go_study/models"
 	"go_study/package/third/zap"
 	"go_study/router"
@@ -13,6 +16,7 @@ func main() {
 
 	models.InitMysql()
 	models.InitRedis()
+	models.InitMongo()
 
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -33,6 +37,11 @@ func main() {
 	// Viper测试
 	// viper.ViperTest()
 
-	r.Run(":" + port)
+	defer func() {
+		mongodb.CloseDB()
+		mysql.CloseDB()
+		redis.CloseDB()
+	}()
 
+	r.Run(":" + port)
 }

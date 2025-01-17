@@ -3,7 +3,6 @@ package redis
 import (
 	"context"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/redis/go-redis/v9"
@@ -30,14 +29,23 @@ func ConnectionRedis() (*redis.Client, error) {
 	ctx := context.Background()
 	_, err = rdb.Ping(ctx).Result()
 	if err != nil {
-		log.Fatalf("Redis 连接失败: %v", err)
-	} else {
-		fmt.Println("Redis 连接成功")
+		return nil, fmt.Errorf("redis 连接失败: %s", err.Error())
 	}
+
+	fmt.Println("Redis 连接成功")
 
 	return rdb, nil
 }
 
 func GetDB() *redis.Client {
+	if rdb == nil {
+		return nil
+	}
 	return rdb
+}
+
+func CloseDB() {
+	if rdb != nil {
+		rdb.Close()
+	}
 }
