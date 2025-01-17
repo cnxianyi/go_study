@@ -3,6 +3,7 @@ package router
 import (
 	"go_study/controllers/grammargin"
 	"go_study/controllers/grammargo"
+	"go_study/controllers/grammarmongo"
 	"go_study/controllers/grammarmysql"
 	"go_study/controllers/grammarredis"
 	testRouter "go_study/controllers/test"
@@ -137,6 +138,14 @@ func SetupRouter() *gin.Engine {
 	packageRouter := r.Group("package")
 	{
 		packageRouter.GET("/package/fmt", fmtPack.FmtTest)
+	}
+
+	// mongo
+	grammarmongoRouter := r.Group("mongo")
+	{
+		grammarmongoRouter.GET("/find/findAll", grammarmongo.FindAll)
+		grammarmongoRouter.GET("/find/findAllIdAccount", grammarmongo.FindAllIdAccount)
+		grammarmongoRouter.GET("/find/findAccountById", grammarmongo.FindAccountById)
 	}
 
 	return r
