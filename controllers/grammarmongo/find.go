@@ -14,7 +14,7 @@ import (
 
 // FindAll 查询所有
 func FindAll(c *gin.Context) {
-	var mdb = mongodb.GetDB("account_info")
+	var mdb = mongodb.GetDB("account").Collection("account_info")
 	var ctx = context.Background()
 	var res []bson.M
 	// 执行查询，获取游标. 用于遍历查询结果
@@ -44,7 +44,7 @@ func FindAllIdAccount(c *gin.Context) {
 		ID      bson.ObjectID `bson:"_id"`
 		Account string        `bson:"account"`
 	}
-	mdb := mongodb.GetDB("account_info")
+	mdb := mongodb.GetDB("account").Collection("account_info")
 
 	// 允许最长等待时间为 10 秒
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
@@ -98,7 +98,7 @@ func FindAccountById(c *gin.Context) {
 		Account string        `bson:"account"`
 	}
 
-	mdb := mongodb.GetDB("account_info")
+	mdb := mongodb.GetDB("account").Collection("account_info")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()

@@ -40,8 +40,8 @@ func ConnectMongo() error {
 	return nil
 }
 
-func GetDB(table string) *mongo.Collection {
-	return mdb.Database("account").Collection(table)
+func GetDB(database string) *mongo.Database {
+	return mdb.Database(database)
 }
 
 func CloseDB() {
