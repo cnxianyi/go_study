@@ -146,6 +146,12 @@ func SetupRouter() *gin.Engine {
 		grammarmongoRouter.GET("/find/findAll", grammarmongo.FindAll)
 		grammarmongoRouter.GET("/find/findAllIdAccount", grammarmongo.FindAllIdAccount)
 		grammarmongoRouter.GET("/find/findAccountById", grammarmongo.FindAccountById)
+		grammarmongoRouter.GET("/find/FindPhoneWithAccountId", grammarmongo.FindPhoneWithAccountId)
+		// insert
+		grammarmongoRouter.GET("/insert/InsertOneAccount", grammarmongo.InsertOneAccount)
+		grammarmongoRouter.GET("/insert/InsertManyAccount", grammarmongo.InsertManyAccount)
+		grammarmongoRouter.GET("/insert/InsertOnePhoneWithAccount", grammarmongo.InsertOnePhoneWithAccount)
+
 	}
 
 	return r
