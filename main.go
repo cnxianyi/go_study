@@ -37,6 +37,8 @@ func main() {
 	// Viper测试
 	// viper.ViperTest()
 
+	// os_test.OsTest()
+
 	defer func() {
 		mongodb.CloseDB()
 		mysql.CloseDB()
