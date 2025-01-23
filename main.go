@@ -6,7 +6,11 @@ import (
 	"go_study/database/mysql"
 	"go_study/database/redis"
 	"go_study/models"
+	os_test "go_study/package/standard/basic/os"
+	strconv_test "go_study/package/standard/basic/strconv"
+	"go_study/package/third/viper"
 	"go_study/package/third/zap"
+	"go_study/practice/multithread"
 	"go_study/router"
 	"os"
 )
@@ -28,16 +32,7 @@ func main() {
 	zap.Init() // zap 日志
 	defer zap.Logger.Sync()
 
-	// Strconv 测试
-	// strconv_test.StrconvTest()
-
-	// 双线程输出 0~20
-	// multithread.PrintWithTwoThread()
-
-	// Viper测试
-	// viper.ViperTest()
-
-	// os_test.OsTest()
+	do()
 
 	defer func() {
 		mongodb.CloseDB()
@@ -46,4 +41,30 @@ func main() {
 	}()
 
 	r.Run(":" + port)
+}
+
+func do() {
+	multithreadTest()
+}
+
+// 多线程
+func multithreadTest() {
+	// 双线程输出 0~20
+	// multithread.PrintWithTwoThread()
+
+	// 多线程执行5个任务并捕获错误
+	multithread.ConcurrentTestA()
+}
+
+// io
+func ioTest() {
+	os_test.OsTest()
+}
+
+func other() {
+	// Viper测试
+	viper.ViperTest()
+
+	// Strconv 测试
+	strconv_test.StrconvTest()
 }
