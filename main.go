@@ -7,8 +7,6 @@ import (
 	"go_study/database/redis"
 	"go_study/models"
 	os_test "go_study/package/standard/basic/os"
-	strconv_test "go_study/package/standard/basic/strconv"
-	"go_study/package/third/viper"
 	"go_study/package/third/zap"
 	"go_study/practice/multithread"
 	"go_study/router"
@@ -44,11 +42,13 @@ func main() {
 }
 
 func do() {
-	multithreadTest()
+	// multithreadTest() // 多线程
 	// gws_test.GwsTest() // ws
 	// buf.Buf() // buffer
 	// proto_test.ProtoTest() // proto
 	// binary_test.BinaryTest() // 字节序 小端|大端
+
+	other()
 }
 
 // 多线程
@@ -67,8 +67,8 @@ func ioTest() {
 
 func other() {
 	// Viper测试
-	viper.ViperTest()
+	// viper.ViperTest()
 
 	// Strconv 测试
-	strconv_test.StrconvTest()
+	// strconv_test.StrconvTest()
 }
