@@ -48,6 +48,7 @@ func do() {
 	// gws_test.GwsTest() // ws
 	// buf.Buf() // buffer
 	// proto_test.ProtoTest() // proto
+	// binary_test.BinaryTest() // 字节序 小端|大端
 }
 
 // 多线程
