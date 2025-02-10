@@ -46,7 +46,8 @@ func main() {
 func do() {
 	multithreadTest()
 	// gws_test.GwsTest() // ws
-	// buf.Buf()
+	// buf.Buf() // buffer
+	// proto_test.ProtoTest() // proto
 }
 
 // 多线程
