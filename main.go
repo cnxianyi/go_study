@@ -71,4 +71,7 @@ func other() {
 
 	// Strconv 测试
 	// strconv_test.StrconvTest()
+
+	// 反射
+	// reflect_test.ReTest()
 }
