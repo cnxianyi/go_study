@@ -74,4 +74,8 @@ func other() {
 
 	// 反射
 	// reflect_test.ReTest()
+
+	// 链表
+	// 单链表
+	// listnote_test.InitA()
 }
