@@ -17,7 +17,6 @@ import (
 
 // SetupRouter 配置路由
 func SetupRouter() *gin.Engine {
-	r := gin.Default()
 
 	// 设置模式
 	ginMode := os.Getenv("GIN_MODE")
@@ -25,6 +24,7 @@ func SetupRouter() *gin.Engine {
 		ginMode = "debug"
 	}
 	gin.SetMode(ginMode)
+	r := gin.Default()
 
 	// 设置信任代理
 	r.SetTrustedProxies([]string{"127.0.0.1"})
